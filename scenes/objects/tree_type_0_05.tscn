@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://df144pd8x53xt"]
+
+[ext_resource type="PackedScene" uid="uid://g7qcgxvm2cxp" path="res://assets/Low Poly Tree Pack/Models/Tree Type0 05.dae" id="1_fjcjy"]
+[ext_resource type="Texture2D" uid="uid://b21m2c6i8tisf" path="res://assets/Low Poly Tree Pack/Textures/Colorsheet Tree Normal.png" id="2_8kq1b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipb6b"]
+albedo_texture = ExtResource("2_8kq1b")
+
+[node name="Tree Type0 05" instance=ExtResource("1_fjcjy")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Tree_Type0_05_mesh" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ipb6b")

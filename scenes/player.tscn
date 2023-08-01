@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://dbw46wyo06lhe"]
+
+[ext_resource type="Script" path="res://src/PlayerController.cs" id="1_uo3n3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iyriy"]
+albedo_color = Color(0.996078, 0, 0.027451, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cqiun"]
+material = SubResource("StandardMaterial3D_iyriy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7etqx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dtuh3"]
+material = SubResource("StandardMaterial3D_7etqx")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkgky"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CameraPivot", "PlayerModel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_uo3n3")
+CameraPivot = NodePath("CameraPivot")
+PlayerModel = NodePath("PlayerModel")
+
+[node name="PlayerModel" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_cqiun")
+
+[node name="Face" type="MeshInstance3D" parent="PlayerModel"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.5, -0.5)
+mesh = SubResource("BoxMesh_dtuh3")
+skeleton = NodePath("../..")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rkgky")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0.5, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+current = true
+fov = 80.0
+size = 15.0
