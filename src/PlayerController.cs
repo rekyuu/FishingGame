@@ -4,7 +4,7 @@ namespace FishingGame;
 
 public partial class PlayerController : CharacterBody3D
 {
-    [Export] public float Speed = 15.0f;
+    [Export] public float Speed = 10.0f;
     [Export] public float Acceleration = 15.0f;
     [Export] public float AirAcceleration = 5.0f;
     [Export] public float MaxTerminalVelocity = 54.0f;
