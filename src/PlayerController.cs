@@ -138,6 +138,7 @@ public partial class PlayerController : CharacterBody3D
 
     private void HandleFishing()
     {
+        if (_isFishing && _currentFishingZone == null) StopFishing();
         if (_currentFishingZone == null || !IsOnFloor()) return;
         
         if (Input.IsActionJustPressed("start_fishing") && !_isFishing) StartFishing();
