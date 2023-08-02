@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://8thau3tu1kjy"]
+
+[ext_resource type="Script" path="res://src/Resources/Fish.cs" id="1_n65mh"]
+
+[resource]
+script = ExtResource("1_n65mh")
+Name = "Uncommon All Day Fish"
+MinWaitTimeSecs = 10
+MaxWaitTimeSecs = 20
+MinSizeCm = 10.0
+MaxSizeCm = 20.0
+AvailableStartHour = 0
+AvailableForHours = 24
+AvailableSeason = 0
+AvailableWeather = 0
+RequiredHookset = 0
+PreferredBait = PackedInt32Array()
+GetAwayChance = 0.0

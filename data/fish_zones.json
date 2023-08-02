@@ -1,0 +1,10 @@
+{
+  "none": [],
+  "sandbox/fish_zone": [
+    { "fish": "sandbox/sandbox_fish_01", "weight": 40.0 },
+    { "fish": "sandbox/sandbox_fish_02", "weight": 25.0 },
+    { "fish": "sandbox/sandbox_fish_03", "weight": 15.0 },
+    { "fish": "sandbox/sandbox_fish_04", "weight": 5.0 },
+    { "fish": "sandbox/sandbox_fish_05", "weight": 1.0 }
+  ]
+}

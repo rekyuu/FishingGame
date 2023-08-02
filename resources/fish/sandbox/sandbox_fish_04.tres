@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://blb0wiurt7reo"]
+
+[ext_resource type="Script" path="res://src/Resources/Fish.cs" id="1_5yw4b"]
+
+[resource]
+script = ExtResource("1_5yw4b")
+Name = "Super Rare Day Fish"
+MinWaitTimeSecs = 20
+MaxWaitTimeSecs = 30
+MinSizeCm = 10.0
+MaxSizeCm = 20.0
+AvailableStartHour = 6
+AvailableForHours = 12
+AvailableSeason = 0
+AvailableWeather = 0
+RequiredHookset = 0
+PreferredBait = PackedInt32Array()
+GetAwayChance = 0.0

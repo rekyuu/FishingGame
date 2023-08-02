@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bf1emlj8vu16"]
+
+[ext_resource type="Script" path="res://src/Resources/Fish.cs" id="1_4l2xm"]
+
+[resource]
+script = ExtResource("1_4l2xm")
+Name = "NULL"
+MinWaitTimeSecs = 30
+MaxWaitTimeSecs = 30
+MinSizeCm = 0.0
+MaxSizeCm = 0.0
+AvailableStartHour = 0
+AvailableForHours = 0
+AvailableSeason = 0
+AvailableWeather = 0
+RequiredHookset = 0
+PreferredBait = PackedInt32Array()
+GetAwayChance = 0.0

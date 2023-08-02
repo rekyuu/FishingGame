@@ -2,32 +2,46 @@
 
 [ext_resource type="Script" path="res://src/Interface/DebugUi.cs" id="1_8l1y3"]
 
-[node name="Debug" type="Panel" node_paths=PackedStringArray("TimeLabel")]
+[node name="Debug" type="Control" node_paths=PackedStringArray("TimeLabel", "DateLabel")]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_8l1y3")
-TimeLabel = NodePath("MarginContainer/VBoxContainer/Time")
+TimeLabel = NodePath("Container/MarginContainer/VBoxContainer/Time")
+DateLabel = NodePath("Container/MarginContainer/VBoxContainer/Date")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Container" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 170.0
+offset_bottom = 87.0
+
+[node name="Panel" type="Panel" parent="Container"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Container"]
+layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Time" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Time" type="Label" parent="Container/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "00:00"
-horizontal_alignment = 1
+text = "??:??"
+vertical_alignment = 1
+
+[node name="Date" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "?????? ??, Year ??"
 vertical_alignment = 1

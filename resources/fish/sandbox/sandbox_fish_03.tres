@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ccl5iitialc51"]
+
+[ext_resource type="Script" path="res://src/Resources/Fish.cs" id="1_ipma8"]
+
+[resource]
+script = ExtResource("1_ipma8")
+Name = "Rare All Day Fish"
+MinWaitTimeSecs = 0
+MaxWaitTimeSecs = 20
+MinSizeCm = 20.0
+MaxSizeCm = 30.0
+AvailableStartHour = 0
+AvailableForHours = 24
+AvailableSeason = 0
+AvailableWeather = 0
+RequiredHookset = 0
+PreferredBait = PackedInt32Array()
+GetAwayChance = 0.0

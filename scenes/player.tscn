@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbw46wyo06lhe"]
+[gd_scene load_steps=9 format=3 uid="uid://dbw46wyo06lhe"]
 
 [ext_resource type="Script" path="res://src/PlayerController.cs" id="1_uo3n3"]
 
@@ -13,13 +13,34 @@ material = SubResource("StandardMaterial3D_iyriy")
 [sub_resource type="BoxMesh" id="BoxMesh_dtuh3"]
 material = SubResource("StandardMaterial3D_7etqx")
 
+[sub_resource type="BoxMesh" id="BoxMesh_p77qn"]
+size = Vector3(0.1, 0.1, 2)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkgky"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CameraPivot", "PlayerModel")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_fhofy"]
+size = Vector3(1, 2, 2)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CameraPivot", "PlayerModel", "FishingRodModel", "FishingDetector")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_uo3n3")
 CameraPivot = NodePath("CameraPivot")
 PlayerModel = NodePath("PlayerModel")
+FishingRodModel = NodePath("PlayerModel/FishingRod")
+FishingDetector = NodePath("FishingDetector")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0.5, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+collision_mask = 2
+spring_length = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+current = true
+fov = 60.0
+size = 15.0
 
 [node name="PlayerModel" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_cqiun")
@@ -29,17 +50,18 @@ transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.5, -0.5)
 mesh = SubResource("BoxMesh_dtuh3")
 skeleton = NodePath("../..")
 
+[node name="FishingRod" type="MeshInstance3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0.6, 1, -0.6)
+mesh = SubResource("BoxMesh_p77qn")
+skeleton = NodePath("../..")
+
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_rkgky")
 
-[node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0.5, 0)
+[node name="FishingDetector" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 4
 
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
-spring_length = 5.0
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-current = true
-fov = 80.0
-size = 15.0
+[node name="FishingCollider" type="CollisionShape3D" parent="FishingDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
+shape = SubResource("BoxShape3D_fhofy")

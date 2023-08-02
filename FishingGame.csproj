@@ -3,4 +3,15 @@
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="FishingGame.Tests\**" />
+    <Compile Remove="tests\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="FishingGame.Tests\**" />
+    <EmbeddedResource Remove="tests\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\Resources\" />
+  </ItemGroup>
 </Project>

@@ -1,3 +1,5 @@
+using FishingGame.Managers;
+using FishingGame.Resources;
 using Godot;
 
 namespace FishingGame;
@@ -18,15 +20,50 @@ public partial class PlayerController : CharacterBody3D
     
     [Export] public Node3D CameraPivot;
     [Export] public Node3D PlayerModel;
+    [Export] public Node3D FishingRodModel;
+    [Export] public Area3D FishingDetector;
     
     private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
     
     private float _verticalVelocity;
+    
+    private bool _isFishing = false;
+    private bool _isHooking = false;
+    
+    private FishZoneController _currentFishingZone;
+    private Fish _currentFish;
+    private SceneTreeTimer _biteTimer;
+    private SceneTreeTimer _hookTimer;
+
+    public override void _Ready()
+    {
+        FishingRodModel.Visible = false;
+        
+        FishingDetector.BodyEntered += OnFishingDetectorBodyEntered;
+        FishingDetector.BodyExited += OnFishingDetectorBodyExited;
+    }
 
     public override void _PhysicsProcess(double delta)
     {
         HandleControllerCamera();
         HandleMovement(delta);
+        HandleFishing();
+    }
+
+    private void OnFishingDetectorBodyEntered(Node3D body)
+    {
+        if (body is not FishZoneController fishZone) return;
+        
+        _currentFishingZone = fishZone;
+        GameManager.Instance.Interactions.ShowStartFishingLabel(true);
+    }
+
+    private void OnFishingDetectorBodyExited(Node3D body)
+    {
+        if (body is not FishZoneController) return;
+        
+        _currentFishingZone = null;
+        GameManager.Instance.Interactions.ShowStartFishingLabel(false);
     }
 
     private void HandleControllerCamera()
@@ -58,6 +95,8 @@ public partial class PlayerController : CharacterBody3D
 
     private void HandleMovement(double delta)
     {
+        if (_isFishing) return;
+        
         Basis cameraBasis = CameraPivot.Transform.Basis;
         Vector3 cameraX = cameraBasis.X;
         Vector3 cameraZ = cameraBasis.Z;
@@ -94,5 +133,99 @@ public partial class PlayerController : CharacterBody3D
         nextRotation.Y = angle;
             
         PlayerModel.Rotation = nextRotation;
+        FishingDetector.Rotation = nextRotation;
+    }
+
+    private void HandleFishing()
+    {
+        if (_currentFishingZone == null || !IsOnFloor()) return;
+        
+        if (Input.IsActionJustPressed("start_fishing") && !_isFishing) StartFishing();
+        else if (Input.IsActionJustPressed("start_fishing") && _isFishing && !_isHooking) StartHooking();
+        else if (Input.IsActionJustPressed("hook_fish") && _isFishing && _isHooking) HandleFishHook();
+        else if (Input.IsActionJustPressed("stop_fishing") && _isFishing) StopFishing(); 
+    }
+
+    private void StartFishing()
+    {
+        GD.Print("You start fishing.");
+        
+        Velocity = Vector3.Zero;;
+        
+        _isFishing = true;
+        FishingRodModel.Visible = true;
+        GameManager.Instance.Interactions.ShowStartFishingLabel(false);
+
+        StartHooking();
+    }
+
+    private void StartHooking()
+    {
+        GD.Print("You cast your line.");
+        
+        _isHooking = true;
+        _currentFish = _currentFishingZone.GetNextFish();
+        float timeToBite = _currentFish.GetTimeToBite();
+        
+        _biteTimer = GetTree().CreateTimer(timeToBite);
+        _biteTimer.Timeout += OnFishBite;
+    }
+
+    private void OnFishBite()
+    {
+        if (_currentFish.Name == "NULL")
+        {
+            GD.Print("There's nothing here...");
+            StopHooking();
+            
+            return;
+        }
+        
+        GD.Print($"Bite!");
+        
+        Input.StartJoyVibration(0, 0.75f, 0.75f, 0.2f);
+        
+        _hookTimer = GetTree().CreateTimer(3);
+        _hookTimer.Timeout += OnFishHookFailure;
+    }
+
+    private void HandleFishHook()
+    {
+        if (_hookTimer != null && _hookTimer.TimeLeft > 0)
+        {
+            int size = _currentFish.GetSize();
+            GD.Print($"Caught a {_currentFish.Name} ({size}cm)");
+        }
+        else GD.Print($"Nothing bites...");
+        
+        StopHooking();
+    }
+
+    private void OnFishHookFailure()
+    {
+        GD.Print("The fish got away...");
+        StopHooking();
+    }
+
+    private void StopHooking()
+    {
+        _isHooking = false;
+        
+        if (_biteTimer != null) _biteTimer.Timeout -= OnFishBite;
+        if (_hookTimer != null) _hookTimer.Timeout -= OnFishHookFailure;
+        
+        _biteTimer = null;
+        _hookTimer = null;
+    }
+
+    private void StopFishing()
+    {
+        GD.Print("You stop fishing.");
+        
+        StopHooking();
+        
+        _isFishing = false;
+        FishingRodModel.Visible = false;
+        GameManager.Instance.Interactions.ShowStartFishingLabel(true);
     }
 }

@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://c060fdkuhnfnm"]
+[gd_scene load_steps=14 format=3 uid="uid://c060fdkuhnfnm"]
 
 [ext_resource type="PackedScene" uid="uid://deimkgw1unqm" path="res://scenes/ui/debug_ui.tscn" id="1_3r3sh"]
 [ext_resource type="PackedScene" uid="uid://bt34rtyfyidud" path="res://scenes/sky.tscn" id="2_ob084"]
+[ext_resource type="PackedScene" uid="uid://bu8g3gicl5s0q" path="res://scenes/ui/interactions.tscn" id="2_tj00f"]
 [ext_resource type="PackedScene" uid="uid://df144pd8x53xt" path="res://scenes/objects/tree_type_0_05.tscn" id="3_2wc8n"]
 [ext_resource type="Texture2D" uid="uid://cxcfyjptvta2" path="res://assets/kenney_prototypetextures/PNG/Dark/texture_08.png" id="4_jeiyk"]
 [ext_resource type="PackedScene" uid="uid://dbw46wyo06lhe" path="res://scenes/player.tscn" id="5_haes2"]
 [ext_resource type="Texture2D" uid="uid://widhv4uywr3h" path="res://assets/kenney_prototypetextures/PNG/Light/texture_07.png" id="6_qawfb"]
+[ext_resource type="Script" path="res://src/FishZoneController.cs" id="7_tjcb6"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dwd5r"]
 height = 4.17097
@@ -41,15 +43,9 @@ grow_vertical = 2
 
 [node name="Debug" parent="Interface" instance=ExtResource("1_3r3sh")]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.013
-anchor_top = 0.023
-anchor_right = 0.065
-anchor_bottom = 0.046
-offset_left = 0.039999
-offset_top = 0.159998
-offset_right = 0.199989
-offset_bottom = 0.319996
+
+[node name="Interactions" parent="Interface" instance=ExtResource("2_tj00f")]
+layout_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("5_haes2")]
 
@@ -70,6 +66,8 @@ shape = SubResource("CylinderShape3D_dwd5r")
 [node name="Ground" type="CSGBox3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 use_collision = true
+collision_layer = 3
+collision_mask = 3
 size = Vector3(50, 2, 50)
 material = SubResource("StandardMaterial3D_f0bk0")
 
@@ -78,6 +76,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 mesh = SubResource("PlaneMesh_grj05")
 
 [node name="FishZone" type="StaticBody3D" parent="World"]
+collision_layer = 5
+collision_mask = 4
+script = ExtResource("7_tjcb6")
+FishZoneDataName = "sandbox/fish_zone"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/FishZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25.5)

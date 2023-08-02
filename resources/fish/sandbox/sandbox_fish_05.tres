@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cu3v2fhdlfitw"]
+
+[ext_resource type="Script" path="res://src/Resources/Fish.cs" id="1_qmjfj"]
+
+[resource]
+script = ExtResource("1_qmjfj")
+Name = "Super Rare Night Fish"
+MinWaitTimeSecs = 0
+MaxWaitTimeSecs = 10
+MinSizeCm = 20.0
+MaxSizeCm = 30.0
+AvailableStartHour = 18
+AvailableForHours = 12
+AvailableSeason = 0
+AvailableWeather = 0
+RequiredHookset = 0
+PreferredBait = PackedInt32Array()
+GetAwayChance = 0.0
