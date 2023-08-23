@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/Interface/DebugUi.cs" id="1_8l1y3"]
 
-[node name="Debug" type="Control" node_paths=PackedStringArray("TimeLabel", "DateLabel")]
+[node name="Debug" type="Control" node_paths=PackedStringArray("TimeLabel", "DateLabel", "WeatherLabel", "InventoryContainer", "NoItemsLabel", "ItemsList", "FishZoneContainer", "NoFishLabel", "FishList", "FishingContainer", "CurrentFishLabel", "FishTimerLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,36 +12,169 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_8l1y3")
-TimeLabel = NodePath("Container/MarginContainer/VBoxContainer/Time")
-DateLabel = NodePath("Container/MarginContainer/VBoxContainer/Date")
+TimeLabel = NodePath("MarginContainer/VBoxContainer/TimeContainer/MarginContainer/VBoxContainer/Time")
+DateLabel = NodePath("MarginContainer/VBoxContainer/TimeContainer/MarginContainer/VBoxContainer/Date")
+WeatherLabel = NodePath("MarginContainer/VBoxContainer/TimeContainer/MarginContainer/VBoxContainer/Weather")
+InventoryContainer = NodePath("MarginContainer/VBoxContainer/InventoryContainer")
+NoItemsLabel = NodePath("MarginContainer/VBoxContainer/InventoryContainer/MarginContainer/VBoxContainer/NoItems")
+ItemsList = NodePath("MarginContainer/VBoxContainer/InventoryContainer/MarginContainer/VBoxContainer/Items")
+FishZoneContainer = NodePath("MarginContainer/VBoxContainer/FishZoneContainer")
+NoFishLabel = NodePath("MarginContainer/VBoxContainer/FishZoneContainer/MarginContainer/VBoxContainer/NoFish")
+FishList = NodePath("MarginContainer/VBoxContainer/FishZoneContainer/MarginContainer/VBoxContainer/Fish")
+FishingContainer = NodePath("MarginContainer/VBoxContainer/FishingContainer")
+CurrentFishLabel = NodePath("MarginContainer/VBoxContainer/FishingContainer/MarginContainer/VBoxContainer/HBoxContainer/CurrentFish")
+FishTimerLabel = NodePath("MarginContainer/VBoxContainer/FishingContainer/MarginContainer/VBoxContainer/HBoxContainer/FishTimer")
 
-[node name="Container" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 170.0
-offset_bottom = 87.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
 
-[node name="Panel" type="Panel" parent="Container"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TimeContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Container"]
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TimeContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TimeContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Container/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TimeContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Time" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+[node name="Time" type="Label" parent="MarginContainer/VBoxContainer/TimeContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "??:??"
+text = "[[ time of day ]]"
 vertical_alignment = 1
 
-[node name="Date" type="Label" parent="Container/MarginContainer/VBoxContainer"]
+[node name="Date" type="Label" parent="MarginContainer/VBoxContainer/TimeContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "?????? ??, Year ??"
+text = "[[ season, day, year ]]"
+vertical_alignment = 1
+
+[node name="Weather" type="Label" parent="MarginContainer/VBoxContainer/TimeContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "[[ weather ]]"
+vertical_alignment = 1
+
+[node name="InventoryContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/InventoryContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/InventoryContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/InventoryContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="Label" parent="MarginContainer/VBoxContainer/InventoryContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inventory"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/InventoryContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NoItems" type="Label" parent="MarginContainer/VBoxContainer/InventoryContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "No items"
+vertical_alignment = 1
+
+[node name="Items" type="VBoxContainer" parent="MarginContainer/VBoxContainer/InventoryContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FishZoneContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/FishZoneContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/FishZoneContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/FishZoneContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="Label" parent="MarginContainer/VBoxContainer/FishZoneContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Fish Zone"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/FishZoneContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NoFish" type="Label" parent="MarginContainer/VBoxContainer/FishZoneContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "No fish"
+vertical_alignment = 1
+
+[node name="Fish" type="VBoxContainer" parent="MarginContainer/VBoxContainer/FishZoneContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FishingContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/FishingContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/FishingContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/FishingContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="Label" parent="MarginContainer/VBoxContainer/FishingContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Fishing"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/FishingContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/FishingContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CurrentFish" type="Label" parent="MarginContainer/VBoxContainer/FishingContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "[[ current fish ]]"
+vertical_alignment = 1
+
+[node name="FishTimer" type="Label" parent="MarginContainer/VBoxContainer/FishingContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[[ timer ]]"
+horizontal_alignment = 2
 vertical_alignment = 1

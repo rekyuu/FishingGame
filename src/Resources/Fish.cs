@@ -3,11 +3,8 @@ using Godot;
 
 namespace FishingGame.Resources;
 
-public partial class Fish : Resource
+public partial class Fish : InventoryItem
 {
-    [Export]
-    public string Name { get; set; }
-    
     [Export]
     public int MinWaitTimeSecs { get; set; }
     
@@ -27,10 +24,10 @@ public partial class Fish : Resource
     public int AvailableForHours { get; set; }
     
     [Export]
-    public int AvailableSeason { get; set; }
+    public Season AvailableSeason { get; set; }
     
     [Export]
-    public int AvailableWeather { get; set; }
+    public Weather AvailableWeather { get; set; }
     
     [Export]
     public int RequiredHookset { get; set; }

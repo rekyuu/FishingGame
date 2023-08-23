@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using FishingGame.Interface;
+using FishingGame.Resources;
 using Godot;
 
 namespace FishingGame.Managers;
@@ -7,11 +9,19 @@ public partial class GameManager : Node
 {
     public static GameManager Instance { get; private set; }
     
-    public InteractionsUi Interactions { get; set; }
+    public DebugUi DebugUi { get; set; }
+    
+    public InteractionsUi InteractionsUi { get; set; }
 
-    public float TimeOfDay { get; private set; } = 8f / 24f;
+    public List<InventoryItem> Inventory { get; private set; } = new();
 
-    public int Season { get; private set; } = 0;
+    public int InventoryLimit { get; private set; } = 24;
+
+    public float TimeOfDay { get; private set; } = 18f / 24f;
+
+    public Weather Weather { get; private set; } = Weather.Clear;
+
+    public Season Season { get; private set; } = Season.Spring;
     
     public int DayOfSeason { get; private set; } = 1;
 
@@ -23,13 +33,19 @@ public partial class GameManager : Node
     public override void _Ready()
     {
         Instance = this;
-
+        
         _timeRate = 1 / _dayLengthSecs;
     }
 
     public override void _Process(double delta)
     {
         SetTimeOfDay(delta);
+    }
+
+    public void AddToInventory(InventoryItem item)
+    {
+        Inventory.Add(item);
+        DebugUi.UpdateInventoryContainer();
     }
 
     private void SetTimeOfDay(double delta)
@@ -43,7 +59,7 @@ public partial class GameManager : Node
         
         DayOfSeason = 1;
         Season++;
-        if (Season <= 3) return;
+        if ((int)Season <= 3) return;
         
         Season = 0;
         Year++;

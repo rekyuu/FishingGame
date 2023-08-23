@@ -11,7 +11,4 @@
     <EmbeddedResource Remove="FishingGame.Tests\**" />
     <EmbeddedResource Remove="tests\**" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Resources\" />
-  </ItemGroup>
 </Project>

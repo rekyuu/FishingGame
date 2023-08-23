@@ -15,6 +15,10 @@ public class FishingZoneControllerTests
     [InlineData(23, 2, 1.5, false)] // 23:00 ~ 01:00, 01:30
     [InlineData(23, 2, 1, false)] // 23:00 ~ 01:00, 01:00
     [InlineData(23, 1, 0, false)] // 23:00 ~ 00:00, 00:00 
+    [InlineData(18, 12, 18, true)] // 18:00 ~ 06:00, 18:00
+    [InlineData(18, 12, 6, false)] // 18:00 ~ 06:00, 06:00
+    [InlineData(6, 12, 6, true)] // 06:00 ~ 18:00, 06:00
+    [InlineData(6, 12, 18, false)] // 06:00 ~ 18:00, 18:00
     public void FishIsInAvailableTimeframe_EvaluatesCorrectly(int availableStartHour, int availableForHours, float currentStandardTime, bool expected)
     {
         float actualTime = currentStandardTime / 24f;

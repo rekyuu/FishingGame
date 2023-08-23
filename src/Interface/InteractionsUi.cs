@@ -9,7 +9,7 @@ public partial class InteractionsUi : Control
 
     public override void _Ready()
     {
-        GameManager.Instance.Interactions = this;
+        GameManager.Instance.InteractionsUi = this;
         
         StartFishingLabel.Visible = false;
     }

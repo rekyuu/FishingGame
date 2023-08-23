@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://c83av5cp2o733"]
+
+[ext_resource type="Script" path="res://src/Interface/ItemCountRow.cs" id="1_obr05"]
+
+[node name="ItemCountRow" type="HBoxContainer" node_paths=PackedStringArray("ItemNameLabel", "ItemCountLabel")]
+script = ExtResource("1_obr05")
+ItemNameLabel = NodePath("ItemName")
+ItemCountLabel = NodePath("ItemAmount")
+
+[node name="ItemName" type="Label" parent="."]
+layout_mode = 2
+text = "[[ item name ]]"
+vertical_alignment = 1
+
+[node name="ItemAmount" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[[ count ]]"
+horizontal_alignment = 2
+vertical_alignment = 1

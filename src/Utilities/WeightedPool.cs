@@ -9,7 +9,7 @@ public class WeightedPool<T> where T : Resource
 {
     [Export] public List<WeightedElement<T>> Elements { get; set; } = new();
 
-    private float _totalWeight = 0;
+    public float TotalWeight { get; private set; } = 0;
 
     public WeightedPool()
     {
@@ -18,20 +18,20 @@ public class WeightedPool<T> where T : Resource
 
     public void UpdateWeights()
     {
-        _totalWeight = 0;
+        TotalWeight = 0;
         Elements = Elements.OrderBy(x => x.Weight).ToList();
         
         foreach (WeightedElement<T> element in Elements)
         {
-            _totalWeight += element.Weight;
-            element.AccumulatedWeight = _totalWeight;
+            TotalWeight += element.Weight;
+            element.AccumulatedWeight = TotalWeight;
         }
     }
 
     public T GetRandomElement()
     {
         Random r = new();
-        float result = r.NextSingle() * _totalWeight;
+        float result = r.NextSingle() * TotalWeight;
 
         return Elements.First(x => x.AccumulatedWeight >= result).Resource;
     }
